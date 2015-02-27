@@ -10,3 +10,13 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#cordova and js applications
+.DS_Store
+node_modules
+bower_components
+dist
+.idea
+*.zip
+*.orig
+test-reports

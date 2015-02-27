@@ -1,0 +1,10 @@
+{
+  "name": "sample",
+  "private": true,
+  "dependencies": {
+    "fontawesome": "*",
+    "bootstrap": "*",
+    "lodash": "*",
+    "emitter.js": "~1.1.0"
+  }
+}
