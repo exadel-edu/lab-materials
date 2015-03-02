@@ -3,16 +3,17 @@
 	width: 70%;
 }
 
-div.item input.todo-toggler {
-	margin-right:10px;
-}
-
-div.item label.strikeout {
-	text-decoration: line-through;
-	color: gray;
-}
-
 .footer {
 	height: 40px;
 	background-color: #EEEEEE;
 }
+
+div.item input.todo-toggler {
+	margin-right:10px;
+}
+
+div.item.strikeout {
+	text-decoration: line-through;
+	color: gray;
+}
+

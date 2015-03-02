@@ -1,16 +1,8 @@
-var addButton;
-var items;
-var todoText;
-var counter;
-
 function run(){
 	var appContainer = document.getElementsByClassName('todos')[0];
 
 	appContainer.addEventListener('click', delegateEvent);
 	appContainer.addEventListener('change', delegateEvent);
-	todoText = document.getElementById('todoText');
-	items = document.getElementsByClassName('items')[0];
-	counter = document.getElementsByClassName('counter-holder')[0];
 
 	updateCounter();
 }
@@ -24,7 +16,9 @@ function delegateEvent(evtObj) {
 	}
 }
 
-function onAddButtonClick(evtObj){
+function onAddButtonClick(){
+	var todoText = document.getElementById('todoText');
+
 	addTodo(todoText.value);
 	todoText.value = '';
 	updateCounter();
@@ -49,6 +43,7 @@ function addTodo(value) {
 	}
 
 	var item = createItem(value);
+	var items = document.getElementsByClassName('items')[0];
 
 	items.appendChild(item);
 	updateCounter();
@@ -56,22 +51,22 @@ function addTodo(value) {
 
 function createItem(text){
 	var divItem = document.createElement('div');
-	var label = document.createElement('label');
 	var checkbox = document.createElement('input');
 
 	divItem.classList.add('item');
 	checkbox.classList.add('todo-toggler');
 	checkbox.setAttribute('type', 'checkbox');
 
-	divItem.appendChild(label);
-	label.appendChild(checkbox);
-	label.appendChild(document.createTextNode(text));
+	divItem.appendChild(checkbox);
+	divItem.appendChild(document.createTextNode(text));
 
 	return divItem;
 }
 
 function updateCounter(){
 	var count = 0;
+	var items = document.getElementsByClassName('items')[0];
+	var counter = document.getElementsByClassName('counter-holder')[0];
 
 	for(var i = 0; i < items.childNodes.length; i++) {
 		var node = items.childNodes[i];
