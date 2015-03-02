@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+    <meta charset="UTF-8">
+    <title>TODOs JS basics demo application</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.css" />
+    <link rel="stylesheet" href="css/todo.css"/>
+    <script src="js/todo.js"></script>
+</head>
+<body onload="run();">
+ <div class="container-fluid app-container main">
+    <header>
+        <h1>TODOs
+            <br/>
+            <small>JS basics demo application</small>
+        </h1>
+    </header>
+    <section class="todos"> 
+        <div class="input form-inline">
+            <input id="todoText" type="text" class="form-control todo-input" placeholder="Какие планы ?">
+            <button id="addButton" type="button" class="btn btn-primary btn-add">Добавить</button>
+        </div>
+        <hr>
+        <div class="items"> 
+            <div class="item">
+                <label class="strikeout"><input value="on" type="checkbox" class="todo-toggler">Сделать разметку</label>
+            </div>
+            <div class="item">
+                <label><input type="checkbox" class="todo-toggler">Выучить JavaScript</label>
+            </div>
+            <div class="item">
+                <label><input type="checkbox" class="todo-toggler"/>Написать чат !</label>
+            </div>        
+        </div>
+        <hr>
+        <div class="nav">
+            <div class="counter">
+                Total: <span class="counter-holder">0</span> items
+            </div>
+        </div>
+    </section>
+    <div class="footer text-center">Exadel © 2015</div>
+ </div>
+</body>
+</html> 
