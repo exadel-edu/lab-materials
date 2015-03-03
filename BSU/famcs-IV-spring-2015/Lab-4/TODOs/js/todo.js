@@ -11,8 +11,10 @@ function delegateEvent(evtObj) {
 	if(evtObj.type === 'click' && evtObj.target.classList.contains('btn-add')){
 		onAddButtonClick(evtObj);
 	}
-	if(evtObj.type === 'change' && evtObj.target.classList.contains('todo-toggler')){
-		onToggleItem(evtObj);
+	if(evtObj.type === 'change' && evtObj.target.nodeName == 'INPUT'){
+		var labelEl = evtObj.target.parentElement;
+
+		onToggleItem(labelEl);
 	}
 }
 
@@ -24,10 +26,7 @@ function onAddButtonClick(){
 	updateCounter();
 } 
 
-function onToggleItem(evtObj) {
-	var inputEl = evtObj.target;
-	var labelEl = inputEl.parentElement;
-
+function onToggleItem(labelEl) {
 	if(labelEl.classList.contains('strikeout')) {
 		labelEl.classList.remove('strikeout');
 	}
@@ -54,7 +53,6 @@ function createItem(text){
 	var checkbox = document.createElement('input');
 
 	divItem.classList.add('item');
-	checkbox.classList.add('todo-toggler');
 	checkbox.setAttribute('type', 'checkbox');
 
 	divItem.appendChild(checkbox);
@@ -64,17 +62,8 @@ function createItem(text){
 }
 
 function updateCounter(){
-	var count = 0;
 	var items = document.getElementsByClassName('items')[0];
 	var counter = document.getElementsByClassName('counter-holder')[0];
 
-	for(var i = 0; i < items.childNodes.length; i++) {
-		var node = items.childNodes[i];
-
-		if(node.nodeName != '#text' && node.classList.contains('item')){
-			count++;
-		}
-	}
-
-	counter.innerText = count.toString();
+    counter.innerText = items.children.length.toString();
 }
