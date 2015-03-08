@@ -1,9 +1,9 @@
 var uniqueId = function() {
-    var date = Date.now();
+	var date = Date.now();
 
-    var random = Math.random() * Math.random();
+	var random = Math.random() * Math.random();
 
-    return Math.floor(date * random);
+	return Math.floor(date * random);
 };
 
 var theTask = function(text, done) {
@@ -18,8 +18,8 @@ var taskList = null;
 
 function run(){
 	taskList = restore() || [ theTask('Сделать разметку', true),
-		theTask('Выучить JavaScript', true),
-		theTask('Написать чат !', false)
+	theTask('Выучить JavaScript', true),
+	theTask('Написать чат !', false)
 	];
 
 	var appContainer = document.getElementsByClassName('todos')[0];
@@ -39,24 +39,19 @@ function createAllTasks() {
 
 function delegateEvent(evtObj) {
 	if(evtObj.type === 'click' 
-		&& evtObj.target.classList.contains('btn-add')){
-		onAddButtonClick(evtObj);
-	}
+		&& evtObj.target.classList.contains('btn-add'))
+		onAddButtonClick();
 	if(evtObj.type === 'change' 
 		&& evtObj.target.nodeName == 'INPUT'
-		&& evtObj.target.type == 'checkbox'){
-		var divItem = evtObj.target.parentElement;
-
-		onToggleItem(divItem);
-	}
+		&& evtObj.target.type == 'checkbox')
+		onToggleItem(evtObj.target.parentElement);
 }
 
 function onAddButtonClick(){
 	var todoText = document.getElementById('todoText');
 
-	if(todoText.value == '') {
+	if(todoText.value == '')
 		return;
-	}
 
 	var newTask = theTask(todoText.value, false);
 
@@ -69,14 +64,14 @@ function onAddButtonClick(){
 
 function onToggleItem(divItem) {
 	var id = getIdOfTask(divItem);
-	var task = null;
 
 	for(var i = 0; i < taskList.length; i++) {
-		if(taskList[i].id == id) {
-			toggle(divItem, taskList[i]);
-			store();
-			return;
-		}
+		if(taskList[i].id != id)
+			continue;
+
+		toggle(divItem, taskList[i]);
+		store();
+		return;
 	}
 }
 
@@ -114,7 +109,7 @@ function addTodo(task) {
 function createItem(task){
 	var temp = document.createElement('div');
 	var htmlAsText = '<div class="item strikeout" data-task-id="идентификатор">'+
-	            	 '<input type="checkbox">описание задачи</div>';
+	'<input type="checkbox">описание задачи</div>';
 
 	temp.innerHTML = htmlAsText;
 	updateItem(temp.firstChild, task);
@@ -126,28 +121,28 @@ function updateCounter(){
 	var items = document.getElementsByClassName('items')[0];
 	var counter = document.getElementsByClassName('counter-holder')[0];
 
-    counter.innerText = items.children.length.toString();
+	counter.innerText = items.children.length.toString();
 }
 
 function store() {
 	if(typeof(Storage) == "undefined") {
-    	alert('localStorage is not accessible');
-    	return;
+		alert('localStorage is not accessible');
+		return;
 	}
 
-   	localStorage.setItem("TODOs taskList", JSON.stringify(taskList));
+	localStorage.setItem("TODOs taskList", JSON.stringify(taskList));
 }
 
 function restore() {
 	if(typeof(Storage) == "undefined") {
-    	alert('localStorage is not accessible');
-    	return;
+		alert('localStorage is not accessible');
+		return;
 	}
 
-   	var item = localStorage.getItem("TODOs taskList");
+	var item = localStorage.getItem("TODOs taskList");
 
-   	if(item == null)
-   		return null;
+	if(item == null)
+		return null;
 
-   	return JSON.parse(item);
+	return JSON.parse(item);
 }
