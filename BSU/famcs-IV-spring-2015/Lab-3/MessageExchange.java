@@ -2,10 +2,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.List;
 
 public class MessageExchange {
@@ -39,30 +36,21 @@ public class MessageExchange {
     }
 
     public JSONObject getJSONObject(String json) throws ParseException {
-        return (JSONObject) jsonParser.parse(json);
+        return (JSONObject) jsonParser.parse(json.trim());
     }
 
     public String inputStreamToString(InputStream in) {
-        InputStreamReader is = new InputStreamReader(in);
-        StringBuilder sb = new StringBuilder();
-        BufferedReader br = new BufferedReader(is);
-        String read = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length = 0;
         try {
-            read = br.readLine();
+            while ((length = in.read(buffer)) != -1) {
+                baos.write(buffer, 0, length);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        while (read != null) {
-            sb.append(read);
-            try {
-                read = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        return sb.toString();
+        return new String(baos.toByteArray());
     }
 }

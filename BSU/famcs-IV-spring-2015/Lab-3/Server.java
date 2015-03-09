@@ -78,12 +78,18 @@ public class Server implements HttpHandler {
         }
     }
 
-    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.flush();
-        os.close();
+    private void sendResponse(HttpExchange httpExchange, String response) {
+        try {
+            byte[] bytes = response.getBytes();
+            httpExchange.sendResponseHeaders(200, bytes.length);
+
+            OutputStream os = httpExchange.getResponseBody();
+            os.write( bytes);
+            os.flush();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Map<String, String> queryToMap(String query) {

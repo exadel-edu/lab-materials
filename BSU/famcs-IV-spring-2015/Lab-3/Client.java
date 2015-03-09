@@ -5,6 +5,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -76,7 +77,9 @@ public class Client implements Runnable {
             connection.setRequestMethod("POST");
 
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-            wr.writeBytes(messageExchange.getClientSendMessageRequest(message));
+
+            byte[] bytes = messageExchange.getClientSendMessageRequest(message).getBytes();
+            wr.write(bytes, 0, bytes.length);
             wr.flush();
             wr.close();
 
@@ -117,7 +120,4 @@ public class Client implements Runnable {
             sendMessage(message);
         }
     }
-
-
-
 }
