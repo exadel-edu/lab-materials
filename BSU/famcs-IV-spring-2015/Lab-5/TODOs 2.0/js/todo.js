@@ -20,6 +20,7 @@ function run(){
 
 	appContainer.addEventListener('click', delegateEvent);
 	appContainer.addEventListener('change', delegateEvent);
+	appContainer.addEventListener('dblclick', delegateEvent);
 
 	var allTasks = restore() || [ theTask('Сделать разметку', true),
 			theTask('Выучить JavaScript', true),
@@ -27,6 +28,7 @@ function run(){
 		];
 
 	createAllTasks(allTasks);
+	output(taskList);
 	updateCounter();
 }
 
@@ -36,13 +38,35 @@ function createAllTasks(allTasks) {
 }
 
 function delegateEvent(evtObj) {
-	if(evtObj.type === 'click' 
+	if(evtObj.type === 'dblclick'
+		&& evtObj.target.classList.contains('item'))
+		onDblClickItem(evtObj.target);
+	if(evtObj.type === 'click'
 		&& evtObj.target.classList.contains('btn-add'))
 		onAddButtonClick();
 	if(evtObj.type === 'change' 
 		&& evtObj.target.nodeName == 'INPUT'
 		&& evtObj.target.type == 'checkbox')
 		onToggleItem(evtObj.target.parentElement);
+}
+
+function onDblClickItem(divItem) {
+	var id = divItem.attributes['data-task-id'].value;
+
+	for(var i = 0; i < taskList.length; i++) {
+		if(taskList[i].id != id)
+			continue;
+
+		changeDescription(taskList[i]);
+		updateItem(divItem, taskList[i]);
+		store(taskList);
+
+		return;
+	}
+}
+
+function changeDescription(task){
+	task.description += '!';
 }
 
 function onAddButtonClick(){
@@ -117,6 +141,8 @@ function updateCounter(){
 }
 
 function store(listToSave) {
+	output(listToSave);
+
 	if(typeof(Storage) == "undefined") {
 		alert('localStorage is not accessible');
 		return;
@@ -134,4 +160,10 @@ function restore() {
 	var item = localStorage.getItem("TODOs taskList");
 
 	return item && JSON.parse(item);
+}
+
+function output(value){
+	var output = document.getElementById('output');
+
+	output.innerText = "var taskList = " + JSON.stringify(value, null, 2) + ";";
 }
