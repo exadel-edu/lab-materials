@@ -16,4 +16,5 @@ import com.sun.net.httpserver.Headers;
             byte[] bytes = response.getBytes();
             Headers headers = httpExchange.getResponseHeaders(); // !!!
             headers.add("Access-Control-Allow-Origin","*");      // !!!
+            httpExchange.sendResponseHeaders(200, bytes.length);
 ```
