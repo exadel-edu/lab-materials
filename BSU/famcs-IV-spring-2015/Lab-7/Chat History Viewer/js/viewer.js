@@ -1,7 +1,7 @@
 var interval = null;
 
 function About() {
-	alert('Chat History Viewer\nExadel @ 2015');
+	alert('Chat History Viewer\nПоказывает серверную историю сообщений\nExadel @ 2015');
 }
 
 function Connect() {
