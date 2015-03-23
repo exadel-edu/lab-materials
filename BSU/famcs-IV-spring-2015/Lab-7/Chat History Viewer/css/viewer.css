@@ -1,0 +1,61 @@
+body, pre {
+    background-color: lightgray;
+	border:none;
+	font-weight: bold;
+}
+
+.container {
+	display: table;
+}
+
+.main {
+	font-size: 16px;
+	width: 100%;
+}
+
+.mainMenu {
+	width:100%;
+	background-color:gray;
+}
+
+.mainMenu .item .caption {
+	background-color:gray;
+	text-decoration: none;
+}
+
+.mainMenu .item {
+	float:left;
+	display:block;
+	position:relative;
+}
+
+.subItems .items .caption,  .item .caption {
+	display: block; 
+	padding: 5px 10px 5px 10px;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+.item .subItems{
+	display:none;
+}
+
+.mainMenu .item:hover>.caption:hover{
+	background-color:navy;
+}
+
+.item:hover .item {
+	float:none;
+}
+
+.item:hover .subItems {
+	display:block;
+	position:absolute;
+	background-color:navy;
+}
+
+.item:hover .subItems .caption:hover {
+	background-color:navy;
+	display:block;
+}
+

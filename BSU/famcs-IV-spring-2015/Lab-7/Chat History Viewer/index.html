@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Chat History Viewer, JavaScript & DOM basics demo application</title>
+    <link rel="stylesheet" href="css/viewer.css"/>
+    <script src="js/viewer.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="container mainMenu">
+            <div class="item" style="float:left">
+                <div class="caption">File</div>
+                <div class="subItems">
+                    <div class="item">
+                        <a class="caption" onclick="Connect();">Connect</a>
+                    </div>
+                    <div class="item">
+                        <a class="caption" onclick="Disconnect();">Disconnect</a>
+                    </div>
+                    <div class="item">
+                        <a class="caption" onclick="Exit();">Exit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="float:right">
+                <div class="caption">Help</div>
+                <div class="subItems">
+                    <div class="item">
+                        <a class="caption" onclick="About();">About</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <pre id="output">
+            
+        </pre>
+    </div>
+</body>
+</html> 
