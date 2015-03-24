@@ -18,3 +18,5 @@ import com.sun.net.httpserver.Headers;
             headers.add("Access-Control-Allow-Origin","*");      // !!!
             httpExchange.sendResponseHeaders(200, bytes.length);
 ```
+
+Альтернативный вариант - закрыть браузер Chrome(все окна !)  и перезапустить с параметром --disable-web-security (в командной строке)
