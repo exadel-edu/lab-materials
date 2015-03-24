@@ -38,7 +38,9 @@ function Disconnect() {
 		interval = null;
 	}
 
-	setOutput('');
+	var help = 'Start server at localhost:999\nExpected URL is http://localhost:999/chat?token=TN11EN';
+
+	setOutput(help);
 }
 
 function ajax(method, url, toReturn) {
