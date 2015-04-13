@@ -1,0 +1,24 @@
+.main {
+	font-size: 24px;
+	width: 90%;
+}
+
+.footer {
+	height: 40px;
+	background-color: #F0F0F0;
+	color: gray;
+}
+
+.header {
+	background-color: #F0F0F0;
+	color: gray;
+}
+
+div.item input {
+	margin-right:10px;
+}
+
+div.item.strikeout {
+	text-decoration: line-through;
+	color: gray;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>TODOs 3.0 Ajax basics demo application</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.css"/>
+    <link rel="stylesheet" href="css/todo.css"/>
+    <script src="js/todo.js"></script>
+</head>
+<body onload="run();">
+<div class="container-fluid app-container main">
+    <div style="float:left; width:50%;">
+        <div class="header">
+            <h1>TODOs 3.0<br/></h1>
+            <small>Ajax, демонстрационное приложение</small>
+        </div>
+        <section class="todos">
+            <div class="input form-inline">
+                <input id="todoText" type="text" class="form-control todo-input" placeholder="Какие планы ?">
+                <button id="addButton" type="button" class="btn btn-primary btn-add">Добавить</button>
+            </div>
+            <hr>
+            <div class="items"></div>
+            <hr>
+            <div class="nav">Всего: <span class="counter-holder">0</span> задач</div>
+        </section>
+        <div class="footer text-right">
+            <small>Exadel © 2015</small>
+        </div>
+    </div>
+    <pre id="output" style="float:right; width:50%;">
+    </pre>
+</div>
+</body>
+</html> 
