@@ -84,7 +84,10 @@ function doPolling() {
 }
 
 function defaultErrorHandler(message) {
+	var historyBox = document.getElementById('history');
+
 	console.error(message);
+	historyBox.innerText = 'ERROR:\n' + message + '\n';
 }
 
 function get(url, continueWith, continueWithError) {
@@ -136,7 +139,7 @@ function ajax(method, url, data, continueWith, continueWithError) {
 	}
 
 	xhr.onerror = function (e) {
-		var errMsg = 'Server connection error !\n'+
+		var errMsg = 'Server connection error ' + appState.mainUrl + '\n'+
 		'\n' +
 		'Check if \n'+
 		'- server is active\n'+
@@ -149,5 +152,5 @@ function ajax(method, url, data, continueWith, continueWithError) {
 }
 
 window.onerror = function(err) {
-	console.error(err);
+	defaultErrorHandler(err.toString());
 }
