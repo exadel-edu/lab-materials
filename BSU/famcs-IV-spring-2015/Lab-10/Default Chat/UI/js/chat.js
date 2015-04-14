@@ -77,6 +77,9 @@ function doPolling() {
 			appState.token = response.token;
 			updateHistory(response.messages);
 			setTimeout(loop, 1000);
+		}, function(error) {
+			defaultErrorHandler(error);
+			setTimeout(loop, 1000);
 		});
 	}
 
