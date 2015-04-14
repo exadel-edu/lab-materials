@@ -85,7 +85,6 @@ function doPolling() {
 
 function defaultErrorHandler(message) {
 	console.error(message);
-	output(message);
 }
 
 function get(url, continueWith, continueWithError) {
@@ -150,5 +149,5 @@ function ajax(method, url, data, continueWith, continueWithError) {
 }
 
 window.onerror = function(err) {
-	output(err.toString());
+	console.error(err);
 }
