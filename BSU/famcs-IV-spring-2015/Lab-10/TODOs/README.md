@@ -14,8 +14,6 @@
 
 1. Clone the repositry
         
-        git clone git@github.com:ibuziuk/TODOs.git
-        
 2. Import the project to IDE
         
 3. Add Tomcat Server to IDE
