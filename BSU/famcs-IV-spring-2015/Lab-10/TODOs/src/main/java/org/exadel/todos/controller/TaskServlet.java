@@ -15,13 +15,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
 import org.exadel.todos.model.Task;
 import org.exadel.todos.model.TaskStorage;
+import org.exadel.todos.storage.xml.XMLHistoryUtil;
 import org.exadel.todos.util.ServletUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import org.xml.sax.SAXException;
 
 @WebServlet("/todos")
 public class TaskServlet extends HttpServlet {
@@ -30,7 +35,11 @@ public class TaskServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		addStubData();
+		try {
+			loadHistory();
+		} catch (SAXException | IOException | ParserConfigurationException | TransformerException e) {
+			logger.error(e);
+		}
 	}
 
 	@Override
@@ -61,8 +70,9 @@ public class TaskServlet extends HttpServlet {
 			JSONObject json = stringToJson(data);
 			Task task = jsonToTask(json);
 			TaskStorage.addTask(task);
+			XMLHistoryUtil.addData(task);
 			response.setStatus(HttpServletResponse.SC_OK);
-		} catch (ParseException e) {
+		} catch (ParseException | ParserConfigurationException | SAXException | TransformerException e) {
 			logger.error(e);
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
@@ -81,11 +91,12 @@ public class TaskServlet extends HttpServlet {
 			if (taskToUpdate != null) {
 				taskToUpdate.setDescription(task.getDescription());
 				taskToUpdate.setDone(task.isDone());
+				XMLHistoryUtil.updateData(taskToUpdate);
 				response.setStatus(HttpServletResponse.SC_OK);
 			} else {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Task does not exist");
 			}
-		} catch (ParseException e) {
+		} catch (ParseException | ParserConfigurationException | SAXException | TransformerException | XPathExpressionException e) {
 			logger.error(e);
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
@@ -99,13 +110,29 @@ public class TaskServlet extends HttpServlet {
 		return jsonObject.toJSONString();
 	}
 
-	private void addStubData() {
+	private void loadHistory() throws SAXException, IOException, ParserConfigurationException, TransformerException  {
+		if (XMLHistoryUtil.doesStorageExist()) {
+			TaskStorage.addAll(XMLHistoryUtil.getTasks());
+		} else {
+			XMLHistoryUtil.createStorage();
+			addStubData();
+		}
+	}
+	
+	private void addStubData() throws ParserConfigurationException, TransformerException {
 		Task[] stubTasks = { 
 				new Task("1", "Create markup", true), 
 				new Task("2", "Learn JavaScript", true),
-				new Task("3", "Learn Java Servlet Technology", false),
+				new Task("3", "Learn Java Servlet Technology", false), 
 				new Task("4", "Write The Chat !", false), };
 		TaskStorage.addAll(stubTasks);
+		for (Task task : stubTasks) {
+			try {
+				XMLHistoryUtil.addData(task);
+			} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+				logger.error(e);
+			}
+		}
 	}
 
 }

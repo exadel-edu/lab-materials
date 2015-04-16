@@ -22,6 +22,10 @@ public final class TaskStorage {
 	public static void addAll(Task[] tasks) {
 		INSTANSE.addAll(Arrays.asList(tasks));
 	}
+	
+	public static void addAll(List<Task> tasks) {
+		INSTANSE.addAll(tasks);
+	}
 
 	public static int getSize() {
 		return INSTANSE.size();
