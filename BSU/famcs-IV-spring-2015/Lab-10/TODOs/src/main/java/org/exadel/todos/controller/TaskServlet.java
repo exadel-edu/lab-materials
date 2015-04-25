@@ -21,7 +21,6 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
 import org.exadel.todos.model.Task;
-import org.exadel.todos.model.TaskStorage;
 import org.exadel.todos.storage.xml.XMLHistoryUtil;
 import org.exadel.todos.util.ServletUtil;
 import org.json.simple.JSONObject;
@@ -48,16 +47,21 @@ public class TaskServlet extends HttpServlet {
 		String token = request.getParameter(TOKEN);
 		logger.info("Token " + token);
 
-		if (token != null && !"".equals(token)) {
-			int index = getIndex(token);
-			logger.info("Index " + index);
-			String tasks = formResponse(index);
-			response.setContentType(ServletUtil.APPLICATION_JSON);
-			PrintWriter out = response.getWriter();
-			out.print(tasks);
-			out.flush();
-		} else {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "'token' parameter needed");
+		try {
+			if (token != null && !"".equals(token)) {
+				int index = getIndex(token);
+				logger.info("Index " + index);
+				String tasks;
+				tasks = formResponse(index);
+				response.setContentType(ServletUtil.APPLICATION_JSON);
+				PrintWriter out = response.getWriter();
+				out.print(tasks);
+				out.flush();
+			} else {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "'token' parameter needed");
+			}
+		} catch (SAXException | ParserConfigurationException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
 
@@ -69,7 +73,6 @@ public class TaskServlet extends HttpServlet {
 		try {
 			JSONObject json = stringToJson(data);
 			Task task = jsonToTask(json);
-			TaskStorage.addTask(task);
 			XMLHistoryUtil.addData(task);
 			response.setStatus(HttpServletResponse.SC_OK);
 		} catch (ParseException | ParserConfigurationException | SAXException | TransformerException e) {
@@ -86,16 +89,7 @@ public class TaskServlet extends HttpServlet {
 		try {
 			JSONObject json = stringToJson(data);
 			Task task = jsonToTask(json);
-			String id = task.getId();
-			Task taskToUpdate = TaskStorage.getTaskById(id);
-			if (taskToUpdate != null) {
-				taskToUpdate.setDescription(task.getDescription());
-				taskToUpdate.setDone(task.isDone());
-				XMLHistoryUtil.updateData(taskToUpdate);
-				response.setStatus(HttpServletResponse.SC_OK);
-			} else {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Task does not exist");
-			}
+			XMLHistoryUtil.updateData(task);
 		} catch (ParseException | ParserConfigurationException | SAXException | TransformerException | XPathExpressionException e) {
 			logger.error(e);
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -103,17 +97,15 @@ public class TaskServlet extends HttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
-	private String formResponse(int index) {
+	private String formResponse(int index) throws SAXException, IOException, ParserConfigurationException {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put(TASKS, TaskStorage.getSubTasksByIndex(index));
-		jsonObject.put(TOKEN, getToken(TaskStorage.getSize()));
+		jsonObject.put(TASKS, XMLHistoryUtil.getSubTasksByIndex(index));
+		jsonObject.put(TOKEN, getToken(XMLHistoryUtil.getStorageSize()));
 		return jsonObject.toJSONString();
 	}
 
-	private void loadHistory() throws SAXException, IOException, ParserConfigurationException, TransformerException  {
-		if (XMLHistoryUtil.doesStorageExist()) {
-			TaskStorage.addAll(XMLHistoryUtil.getTasks());
-		} else {
+	private void loadHistory() throws SAXException, IOException, ParserConfigurationException, TransformerException {
+		if (!XMLHistoryUtil.doesStorageExist()) { // creating storage and history if not exist
 			XMLHistoryUtil.createStorage();
 			addStubData();
 		}
@@ -125,7 +117,6 @@ public class TaskServlet extends HttpServlet {
 				new Task("2", "Learn JavaScript", true),
 				new Task("3", "Learn Java Servlet Technology", false), 
 				new Task("4", "Write The Chat !", false), };
-		TaskStorage.addAll(stubTasks);
 		for (Task task : stubTasks) {
 			try {
 				XMLHistoryUtil.addData(task);

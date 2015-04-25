@@ -124,6 +124,10 @@ public final class XMLHistoryUtil {
 	}
 
 	public static synchronized List<Task> getTasks() throws SAXException, IOException, ParserConfigurationException {
+		return getSubTasksByIndex(0); // Return all tasks from history 
+	}
+	
+	public static synchronized List<Task> getSubTasksByIndex(int index) throws ParserConfigurationException, SAXException, IOException {
 		List<Task> tasks = new ArrayList<>();
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -131,7 +135,7 @@ public final class XMLHistoryUtil {
 		document.getDocumentElement().normalize();
 		Element root = document.getDocumentElement(); // Root <tasks> element
 		NodeList taskList = root.getElementsByTagName(TASK);
-		for (int i = 0; i < taskList.getLength(); i++) {
+		for (int i = index; i < taskList.getLength(); i++) {
 			Element taskElement = (Element) taskList.item(i);
 			String id = taskElement.getAttribute(ID);
 			String description = taskElement.getElementsByTagName(DESCRIPTION).item(0).getTextContent();
@@ -163,5 +167,4 @@ public final class XMLHistoryUtil {
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		return transformer;
 	}
-
 }
