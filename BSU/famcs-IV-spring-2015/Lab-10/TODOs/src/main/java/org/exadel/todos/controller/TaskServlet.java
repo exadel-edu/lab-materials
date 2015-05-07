@@ -53,6 +53,7 @@ public class TaskServlet extends HttpServlet {
 				logger.info("Index " + index);
 				String tasks;
 				tasks = formResponse(index);
+				response.setCharacterEncoding(ServletUtil.UTF_8);
 				response.setContentType(ServletUtil.APPLICATION_JSON);
 				PrintWriter out = response.getWriter();
 				out.print(tasks);
