@@ -1,0 +1,1 @@
+INSERT INTO messages (message_id, description) VALUES (1, 'Learn SQL');
