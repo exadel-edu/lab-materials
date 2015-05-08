@@ -65,7 +65,7 @@ public final class XMLHistoryUtil {
 		Element taskElement = document.createElement(TASK);
 		root.appendChild(taskElement);
 
-		taskElement.setAttribute(ID, task.getId());
+		taskElement.setAttribute(ID, Integer.toString(task.getId()));
 
 		Element description = document.createElement(DESCRIPTION);
 		description.appendChild(document.createTextNode(task.getDescription()));
@@ -88,7 +88,7 @@ public final class XMLHistoryUtil {
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(STORAGE_LOCATION);
 		document.getDocumentElement().normalize();
-		Node taskToUpdate = getNodeById(document, task.getId());
+		Node taskToUpdate = getNodeById(document, Integer.toString(task.getId()));
 
 		if (taskToUpdate != null) {
 
@@ -137,7 +137,7 @@ public final class XMLHistoryUtil {
 		NodeList taskList = root.getElementsByTagName(TASK);
 		for (int i = index; i < taskList.getLength(); i++) {
 			Element taskElement = (Element) taskList.item(i);
-			String id = taskElement.getAttribute(ID);
+			int id = Integer.valueOf(taskElement.getAttribute(ID));
 			String description = taskElement.getElementsByTagName(DESCRIPTION).item(0).getTextContent();
 			boolean done = Boolean.valueOf(taskElement.getElementsByTagName(DONE).item(0).getTextContent());
 			tasks.add(new Task(id, description, done));

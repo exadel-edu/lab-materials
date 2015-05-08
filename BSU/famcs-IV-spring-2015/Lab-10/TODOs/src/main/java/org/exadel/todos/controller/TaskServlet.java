@@ -9,6 +9,7 @@ import static org.exadel.todos.util.TaskUtil.stringToJson;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
+import org.exadel.todos.dao.TaskDao;
+import org.exadel.todos.dao.TaskDaoImpl;
 import org.exadel.todos.model.Task;
 import org.exadel.todos.storage.xml.XMLHistoryUtil;
 import org.exadel.todos.util.ServletUtil;
@@ -31,10 +34,12 @@ import org.xml.sax.SAXException;
 public class TaskServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(TaskServlet.class.getName());
-
+	private TaskDao taskDao;
+	
 	@Override
 	public void init() throws ServletException {
 		try {
+			this.taskDao = new TaskDaoImpl();
 			loadHistory();
 		} catch (SAXException | IOException | ParserConfigurationException | TransformerException e) {
 			logger.error(e);
@@ -76,6 +81,7 @@ public class TaskServlet extends HttpServlet {
 			Task task = jsonToTask(json);
 			XMLHistoryUtil.addData(task);
 			response.setStatus(HttpServletResponse.SC_OK);
+			taskDao.add(task);
 		} catch (ParseException | ParserConfigurationException | SAXException | TransformerException e) {
 			logger.error(e);
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -91,6 +97,7 @@ public class TaskServlet extends HttpServlet {
 			JSONObject json = stringToJson(data);
 			Task task = jsonToTask(json);
 			XMLHistoryUtil.updateData(task);
+			taskDao.update(task);
 		} catch (ParseException | ParserConfigurationException | SAXException | TransformerException | XPathExpressionException e) {
 			logger.error(e);
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -110,14 +117,16 @@ public class TaskServlet extends HttpServlet {
 			XMLHistoryUtil.createStorage();
 			addStubData();
 		}
+		List<Task> tasks = taskDao.selectAll();
+		logger.info(tasks);
 	}
 	
 	private void addStubData() throws ParserConfigurationException, TransformerException {
 		Task[] stubTasks = { 
-				new Task("1", "Create markup", true), 
-				new Task("2", "Learn JavaScript", true),
-				new Task("3", "Learn Java Servlet Technology", false), 
-				new Task("4", "Write The Chat !", false), };
+				new Task(1, "Create markup", true), 
+				new Task(2, "Learn JavaScript", true),
+				new Task(3, "Learn Java Servlet Technology", false), 
+				new Task(4, "Write The Chat !", false), };
 		for (Task task : stubTasks) {
 			try {
 				XMLHistoryUtil.addData(task);

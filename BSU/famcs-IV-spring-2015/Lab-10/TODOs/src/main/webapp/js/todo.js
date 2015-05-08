@@ -1,10 +1,7 @@
 'use strict';
 
 var uniqueId = function() {
-	var date = Date.now();
-	var random = Math.random() * Math.random();
-
-	return Math.floor(date * random).toString();
+	return Math.floor(Math.random() * 2147483647).toString(); // Integer.MAX_VALUE
 };
 
 var theTask = function(text, done) {

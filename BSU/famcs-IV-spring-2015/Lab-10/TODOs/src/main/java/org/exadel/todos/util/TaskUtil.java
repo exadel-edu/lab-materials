@@ -37,7 +37,7 @@ public final class TaskUtil {
 		Object done = json.get(DONE);
 
 		if (id != null && description != null && done != null) {
-			return new Task((String) id, (String) description, (Boolean) done);
+			return new Task(Integer.parseInt((String) id), (String) description, (boolean) done);
 		}
 		return null;
 	}
