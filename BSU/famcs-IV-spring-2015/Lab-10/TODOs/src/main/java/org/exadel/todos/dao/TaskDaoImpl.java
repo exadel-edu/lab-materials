@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.exadel.todos.db.ConnectionManager;
 import org.exadel.todos.model.Task;
 
 public class TaskDaoImpl implements TaskDao {
+	private static Logger logger = Logger.getLogger(TaskDaoImpl.class.getName());
 
 	@Override
 	public void add(Task task) {
@@ -25,13 +27,13 @@ public class TaskDaoImpl implements TaskDao {
 			preparedStatement.setBoolean(3, task.isDone());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			if (preparedStatement != null) {
 				try {
 					preparedStatement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 
@@ -39,7 +41,7 @@ public class TaskDaoImpl implements TaskDao {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		}
@@ -57,13 +59,13 @@ public class TaskDaoImpl implements TaskDao {
 			preparedStatement.setInt(3, task.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			if (preparedStatement != null) {
 				try {
 					preparedStatement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 
@@ -71,7 +73,7 @@ public class TaskDaoImpl implements TaskDao {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		}
@@ -100,27 +102,27 @@ public class TaskDaoImpl implements TaskDao {
 				tasks.add(new Task(id, description, done));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e);
 		} finally {
 			if (resultSet != null) {
 				try {
 					resultSet.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 			if (connection != null) {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		}
