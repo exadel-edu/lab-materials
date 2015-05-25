@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.exadel.todos.db.ConnectionManager;
+import org.exadel.todos.db.ConnectionPool;
 import org.exadel.todos.model.Task;
 
 public class TaskDaoImpl implements TaskDao {
@@ -20,7 +20,7 @@ public class TaskDaoImpl implements TaskDao {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement("INSERT INTO tasks (id, description, done) VALUES (?, ?, ?)");
 			preparedStatement.setInt(1, task.getId());
 			preparedStatement.setString(2, task.getDescription());
@@ -52,7 +52,7 @@ public class TaskDaoImpl implements TaskDao {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement("Update tasks SET description = ?, done = ? WHERE id = ?");
 			preparedStatement.setString(1, task.getDescription());
 			preparedStatement.setBoolean(2, task.isDone());
@@ -92,7 +92,7 @@ public class TaskDaoImpl implements TaskDao {
 		ResultSet resultSet = null;
 
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionPool.getConnection();
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM tasks");
 			while (resultSet.next()) {

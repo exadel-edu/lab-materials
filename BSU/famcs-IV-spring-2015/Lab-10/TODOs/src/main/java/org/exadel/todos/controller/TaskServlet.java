@@ -50,7 +50,7 @@ public class TaskServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.info("doGet");
 		String token = request.getParameter(TOKEN);
-		logger.info("Token " + token);
+		logger.info("Token " + token);	
 
 		try {
 			if (token != null && !"".equals(token)) {

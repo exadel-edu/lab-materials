@@ -7,6 +7,7 @@ import org.json.simple.parser.ParseException;
 
 public final class TaskUtil {
 	public static final String TOKEN = "token";
+	public static final String USER = "user";
 	public static final String TASKS = "tasks";
 	private static final String TN = "TN";
 	private static final String EN = "EN";

@@ -41,7 +41,26 @@ function delegateEvent(evtObj) {
 		&& evtObj.target.nodeName == 'INPUT'
 		&& evtObj.target.type == 'checkbox')
 		onToggleItem(evtObj.target.parentElement);
+	if(evtObj.type === 'click'
+		&& evtObj.target.classList.contains('btn-edit'))
+		logout();
 }
+
+function logout() {
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			window.location.reload();
+		}
+	}
+	xmlhttp.open("POST", "logout", true);
+	xmlhttp.send();
+} 
 
 function onAddButtonClick(){
 	var todoText = document.getElementById('todoText');
