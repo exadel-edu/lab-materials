@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+    <meta charset="UTF-8">
+    <title>Список задач. HTML5 &amp; CSS3 basics demo application</title>
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/todo.css"/>
+    <link rel="stylesheet" href="../../resources/css/fonts.css"/>
+    <link rel="stylesheet" href="css/responsive.css"/>
+</head>
+<body>
+
+    <div class="all">
+        <header class="header">
+            <div class="section-inner">
+                <h1 class="section-headline">Список задач</h1>
+                <h6 class="section-headline-text">Демонстрационное приложение. HTML5 &amp; CSS3.</h6>
+            </div>
+        </header>
+        <main class="todos content">
+           <section class="section">
+                <div class="section-inner">
+                    <div class="section-content clearfix">
+                        <div class="todo-wrap clearfix">
+                            <div class="todo">
+                                <div class="todo-controls">
+                                    <input id="todoText" type="text" class="todo-input" placeholder="Какие планы ?">
+                                    <button id="addButton" type="button" class="todo-button">Добавить</button>
+                                </div>
+                                <div class="todo-items-wrap">
+                                    <ul class="items">
+                                        <li class="item strikeout">
+                                            <input class="item-check" value="on" type="checkbox" checked>Сделать разметку
+                                        </li>
+                                        <li class="item">
+                                            <input class="item-check" type="checkbox">Выучить JavaScript
+                                        </li>
+                                        <li class="item">
+                                            <input class="item-check" type="checkbox"/>Написать чат !
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>                            
+                        
+                            <div class="todo-output-wrap" style="display:none;">
+                                <aside class="todo-output" >
+                                    <pre id="output" class="todo-output-text">
+                                    </pre>
+                                </aside>
+                            </div>
+                        </div>
+
+                        <div class="todo-result"><span class="todo-result-text">Всего: <span class="counter-holder">0</span> задач </span></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="section-inner">
+            <div class="footer-content">
+                <span class="footer-text">Exadel, 2016</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

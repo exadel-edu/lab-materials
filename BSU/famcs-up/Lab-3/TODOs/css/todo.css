@@ -1,0 +1,142 @@
+html, body {
+    height: 100%;
+}
+
+body {
+	font-family: 'Open Sans';
+    min-height: 100%;
+    color: #949494;
+	font-size: 24px;
+}
+
+.all {
+    min-height: 100%;
+}
+
+.section-inner {
+	max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+	background-color: #f0f0f0;
+}
+
+.todos {
+	padding: 0 0 100px;
+}
+
+.todo-result-text {
+	font-family: 'Open Sans Semibold';
+	color: #333333;
+}
+
+.section-headline {
+	font-family: 'Open Sans Bold';
+	color: #333333;
+	font-size: 38.5px;
+	line-height: 38.5px;
+	padding: 12px 20px;
+}
+
+.section-headline-text {
+	font-family: 'Open Sans Semibold';
+    font-size: 17px;
+    line-height: 17px;
+    padding: 0 20px 12px 20px;
+}
+
+.footer-content {
+	font-family: "Open Sans Bold";
+	height: 100px;
+    margin: -100px auto;
+    text-align: right;
+    line-height: 100px;
+    padding: 0 20px;
+    color: #333333;
+}
+
+.item {
+	margin: 0 0 10px 0;
+}
+
+.item-check {
+	margin: 0 10px 0 0;
+}
+
+.item.strikeout {
+	text-decoration: line-through;
+	color: gray;
+}
+
+.todo-items-wrap {
+	padding: 20px 0 40px 0;
+}
+
+.todo-input {
+	display: inline-block;
+	height: 20px;
+    padding: 4px 6px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #555555;
+    width: 342px;
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    font-family: 'Open Sans';
+}
+
+.todo-button {
+	display: inline-block;
+  	padding: 4px 12px;
+  	font-size: 14px;
+  	line-height: 20px;
+  	color: #ffffff;
+  	text-align: center;
+  	cursor: pointer;
+  	background-color: #337ab7;
+  	border: 1px solid #337ab7;
+    border-radius: 4px;
+    font-family: 'Open Sans Semibold';
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;	
+}
+
+.todo {
+	float: left;
+	width: 50%;
+}
+
+.todo-output-wrap {
+	float: right;
+	width: 50%;	
+}
+
+.todo-output {
+	min-height: 400px;
+	background-color: #f5f5f5;
+	border: 1px solid #d3d3d3;
+	border-radius: 4px;
+	padding: 12px;
+	color: #333333;
+}
+
+.section-content {
+	padding: 40px 20px;
+}
+
+.todo-result {
+	margin: 20px 0;
+}
+
+.todo-output-text {
+	word-break: break-all;
+    word-wrap: break-word;
+}
+
