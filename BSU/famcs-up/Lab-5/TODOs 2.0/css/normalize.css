@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+code, kbd, pre, samp, tt, var {
+font: 14px/18px Consolas, "Courier New", monospace;
+}
+body, optgroup {
+color: #000;
+background: #fff;
+}
+body, code, dl, dd, form, pre {
+margin: 0;
+}
+
+a:link, a:visited, ins {
+text-decoration: none;
+}
+a:link img, a:visited img, object, fieldset, abbr, acronym {
+border: none;
+}
+img {
+vertical-align: bottom;
+}
+td, th, textarea {
+vertical-align: top;
+}
+li {
+display: block;
+}
+
+table {
+border-collapse: collapse;
+}
+caption, th {
+text-align: left;
+}
+td, th, nav {
+padding: 0;
+}
+address, blockquote, h1, h2, h3, h4, h5, h6, fieldset, p, ol, ul ,li{
+margin: 0;
+padding: 0;
+}
+th, h1, h2, h3, h4, h5, h6 {
+font-weight: normal;
+}
+
+ul {
+	list-style: none;
+}

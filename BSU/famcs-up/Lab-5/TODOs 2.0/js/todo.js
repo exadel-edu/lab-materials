@@ -42,7 +42,7 @@ function delegateEvent(evtObj) {
 		&& evtObj.target.classList.contains('item'))
 		onDblClickItem(evtObj.target);
 	if(evtObj.type === 'click'
-		&& evtObj.target.classList.contains('btn-add'))
+		&& evtObj.target.classList.contains('todo-button'))
 		onAddButtonClick();
 	if(evtObj.type === 'change' 
 		&& evtObj.target.nodeName == 'INPUT'
@@ -123,9 +123,9 @@ function addTodo(task) {
 }
 
 function createItem(task){
-	var temp = document.createElement('div');
-	var htmlAsText = '<div class="item strikeout" data-task-id="идентификатор">'+
-	'<input type="checkbox">описание задачи</div>';
+	var temp = document.createElement('li');
+	var htmlAsText = '<li class="item strikeout" data-task-id="идентификатор">'+
+	'<input class="item-check" type="checkbox">описание задачи</li>';
 
 	temp.innerHTML = htmlAsText;
 	updateItem(temp.firstChild, task);
