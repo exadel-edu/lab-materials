@@ -1,0 +1,77 @@
+@media screen and (max-width: 992px) {
+	.section-inner {
+		max-width: 900px;
+	    margin: 0 auto;
+	}
+
+	.todo-input {
+		width: 60%;
+	}
+
+	.item {
+		font-size: 0.8em;
+	}
+
+	.todo-result-text {
+		font-size: 0.8em;
+	}
+
+	.footer-text {
+		font-size: 0.8em;
+	}
+
+	.header {
+		font-size: 0.8em;
+	}
+
+	.todo-output-text {
+		font-size: 0.6em;
+	}
+
+
+}
+
+
+
+@media screen and (max-width: 670px) {
+	.section-inner {
+		max-width: 610px;
+	    margin: 0 auto;
+	}
+
+	.item {
+		font-size: 0.8em;
+	}
+
+	.section-headline-text {
+		font-size: 0.8em;
+	}
+
+	.section-headline {
+		font-size: 1.5em;
+	}
+
+	.todo {
+		width: 100%;
+	}
+
+	.todo-output-wrap {
+		width: 100%;
+	}
+
+	.todo-input {
+		width: 60%;
+	}
+
+	.todo-output-text {
+		font-size: 0.6em;
+	}
+
+}
+
+@media screen and (max-width: 353px) {
+	.todo-input {
+		width: 100%;
+	}
+
+}

@@ -1,35 +1,57 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+    <head lang="en">
     <meta charset="UTF-8">
-    <title>TODOs 3.0 Ajax basics demo application</title>
-    <link rel="stylesheet" href="css/lib/bootstrap.css"/>
+    <title>Список задач. Javascript &amp; AJAX.</title>
+    <link rel="stylesheet" href="css/normalize.css"/>
     <link rel="stylesheet" href="css/todo.css"/>
+    <link rel="stylesheet" href="../../resources/css/fonts.css"/>
+    <link rel="stylesheet" href="css/responsive.css"/>
     <script src="js/todo.js"></script>
 </head>
 <body onload="run();">
-<div class="container-fluid app-container main">
-    <div style="float:left; width:50%;">
-        <div class="header">
-            <h1>TODOs 3.0<br/></h1>
-            <small>Ajax, демонстрационное приложение</small>
-        </div>
-        <section class="todos">
-            <div class="input form-inline">
-                <input id="todoText" type="text" class="form-control todo-input" placeholder="Какие планы ?">
-                <button id="addButton" type="button" class="btn btn-primary btn-add">Добавить</button>
+
+    <div class="all">
+        <header class="header">
+            <div class="section-inner">
+                <h1 class="section-headline">Список задач</h1>
+                <h6 class="section-headline-text">Демонстрационное приложение. Javascript &amp; AJAX.</h6>
             </div>
-            <hr>
-            <div class="items"></div>
-            <hr>
-            <div class="nav">Всего: <span class="counter-holder">0</span> задач</div>
-        </section>
-        <div class="footer text-right">
-            <small>Exadel © 2015</small>
-        </div>
+        </header>
+        <main class="todos content">
+            <section class="section">
+                <div class="section-inner">
+                    <div class="section-content clearfix">
+                        <div class="todo-wrap clearfix">
+                            <div class="todo">
+                                <div class="todo-controls">
+                                    <input id="todoText" type="text" class="todo-input" placeholder="Какие планы ?">
+                                    <button id="addButton" type="button" class="todo-button">Добавить</button>
+                                </div>
+                                <div class="todo-items-wrap">
+                                    <ul class="items">
+                                        
+                                    </ul>
+                                </div>
+                            </div>                            
+                            <div class="todo-output-wrap">
+                                <aside class="todo-output">
+                                    <pre id="output" class="todo-output-text"></pre>
+                                </aside>
+                            </div>
+                        </div>
+                        <div class="todo-result"><span class="todo-result-text">Всего: <span class="counter-holder">0</span> задач </span></div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-    <pre id="output" style="float:right; width:50%;">
-    </pre>
-</div>
+    <footer class="footer">
+        <div class="section-inner">
+            <div class="footer-content">
+                <span class="footer-text">Exadel, 2016</span>
+            </div>
+        </div>
+    </footer>
 </body>
 </html> 
