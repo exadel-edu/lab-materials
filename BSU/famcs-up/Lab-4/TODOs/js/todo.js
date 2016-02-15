@@ -8,7 +8,7 @@ function run(){
 }
 
 function delegateEvent(evtObj) {
-	if(evtObj.type === 'click' && evtObj.target.classList.contains('btn-add')){
+	if(evtObj.type === 'click' && evtObj.target.classList.contains('todo-button')){
 		onAddButtonClick(evtObj);
 	}
 	if(evtObj.type === 'change' && evtObj.target.nodeName == 'INPUT'){
@@ -49,8 +49,9 @@ function addTodo(value) {
 }
 
 function createItem(text){
-	var divItem = document.createElement('div');
+	var divItem = document.createElement('li');
 	var checkbox = document.createElement('input');
+	checkbox.classList.add('item-check');
 
 	divItem.classList.add('item');
 	checkbox.setAttribute('type', 'checkbox');

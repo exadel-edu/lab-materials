@@ -2,40 +2,66 @@
 <html>
     <head lang="en">
     <meta charset="UTF-8">
-    <title>TODOs JavaScript & DOM basics demo application</title>
-    <link rel="stylesheet" href="css/lib/bootstrap.css" />
+    <title>Список задач. JavaScript &amp; DOM basics demo application</title>
+    <link rel="stylesheet" href="css/normalize.css"/>
     <link rel="stylesheet" href="css/todo.css"/>
+    <link rel="stylesheet" href="../../resources/css/fonts.css"/>
+    <link rel="stylesheet" href="css/responsive.css"/>
     <script src="js/todo.js"></script>
 </head>
 <body onload="run();">
- <div class="container-fluid app-container main">
-    <header>
-        <h1>TODOs
-            <br/>
-            <small>JavaScript демонстрационное приложение</small>
-        </h1>
-    </header>
-    <section class="todos">
-        <div class="input form-inline">
-            <input id="todoText" type="text" class="form-control todo-input" placeholder="Какие планы ?">
-            <button id="addButton" type="button" class="btn btn-primary btn-add">Добавить</button>
+
+    <div class="all">
+        <header class="header">
+            <div class="section-inner">
+                <h1 class="section-headline">Список задач</h1>
+                <h6 class="section-headline-text">Демонстрационное приложение. JavaScript &amp; DOM.</h6>
+            </div>
+        </header>
+        <main class="todos content">
+           <section class="section">
+                <div class="section-inner">
+                    <div class="section-content clearfix">
+                        <div class="todo-wrap clearfix">
+                            <div class="todo">
+                                <div class="todo-controls">
+                                    <input id="todoText" type="text" class="todo-input" placeholder="Какие планы ?">
+                                    <button id="addButton" type="button" class="todo-button">Добавить</button>
+                                </div>
+                                <div class="todo-items-wrap">
+                                    <ul class="items">
+                                        <li class="item strikeout">
+                                            <input class="item-check" value="on" type="checkbox" checked>Сделать разметку
+                                        </li>
+                                        <li class="item">
+                                            <input class="item-check" type="checkbox">Выучить JavaScript
+                                        </li>
+                                        <li class="item">
+                                            <input class="item-check" type="checkbox"/>Написать чат !
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>                            
+                        
+                            <div class="todo-output-wrap">
+                                <aside class="todo-output">
+                                    <pre id="output" class="todo-output-text"></pre>
+                                </aside>
+                            </div>
+                        </div>
+
+                        <div class="todo-result"><span class="todo-result-text">Всего: <span class="counter-holder">0</span> задач </span></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="section-inner">
+            <div class="footer-content">
+                <span class="footer-text">Exadel, 2016</span>
+            </div>
         </div>
-        <hr>
-        <div class="items">
-            <div class="item strikeout">
-                <input value="on" type="checkbox" checked>Сделать разметку
-            </div>
-            <div class="item">
-                <input type="checkbox">Выучить JavaScript
-            </div>
-            <div class="item">
-                <input type="checkbox"/>Написать чат !
-            </div>
-        </div>
-        <hr>
-        <div class="nav">Всего: <span class="counter-holder">0</span> задач</div>
-    </section>
-    <div class="footer text-center">Exadel © 2015</div>
- </div>
+    </footer>
 </body>
 </html> 
