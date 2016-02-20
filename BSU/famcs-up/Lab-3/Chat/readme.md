@@ -1,20 +1,21 @@
 # Windows
 
 ## Compile
-* javac -cp "./json-simple-1.1.1.jar;" -Xlint:unchecked Client.java
-* javac -cp "./json-simple-1.1.1.jar;" -Xlint:unchecked Server.java
+* compile-windows.cmd
 
 ##Run
-* start java -cp "./json-simple-1.1.1.jar;" Server 999
-* start java -cp "./json-simple-1.1.1.jar;" Client localhost 999
-* start java -cp "./json-simple-1.1.1.jar;" Client localhost 999
+* Server
+** run-server-windows.cmd
+* Client
+** run-client-windows.cmd
 
-# Linux or OS X
+# Linux
 
 ## Compile
-* javac -cp "json-simple-1.1.1.jar:" -Xlint:unchecked Client.java
-* javac -cp "json-simple-1.1.1.jar:" -Xlint:unchecked Server.java
+* compile-linux.sh
 
-## Run
-* sudo java -cp "json-simple-1.1.1.jar:" Server 999
-* java -cp "json-simple-1.1.1.jar:" Client localhost 999
+##Run
+* Server
+** run-server-linux.sh
+* Client
+** run-client-linux.sh
