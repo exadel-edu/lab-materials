@@ -1,6 +1,7 @@
 package by.bsu.up.chat.server;
 
 import by.bsu.up.chat.Constants;
+import by.bsu.up.chat.InvalidTokenException;
 import by.bsu.up.chat.logging.Logger;
 import by.bsu.up.chat.logging.impl.Log;
 import by.bsu.up.chat.utils.MessageHelper;
@@ -64,9 +65,17 @@ public class ServerHandler implements HttpHandler {
         if (StringUtils.isEmpty(token)) {
             return Response.badRequest("Token query parameter is required");
         }
-        int index = MessageHelper.parseToken(token);
-        String responseBody = MessageHelper.buildServerResponseBody(messageStorage.subList(index, messageStorage.size()));
-        return Response.ok(responseBody);
+        try {
+            int index = MessageHelper.parseToken(token);
+            if (index > messageStorage.size()) {
+                return Response.badRequest(
+                        String.format("Incorrect token in request: %s. Server does not have so many messages", token));
+            }
+            String responseBody = MessageHelper.buildServerResponseBody(messageStorage.subList(index, messageStorage.size()));
+            return Response.ok(responseBody);
+        } catch (InvalidTokenException e) {
+            return Response.badRequest(e.getMessage());
+        }
     }
 
     private Response doPost(HttpExchange httpExchange) {

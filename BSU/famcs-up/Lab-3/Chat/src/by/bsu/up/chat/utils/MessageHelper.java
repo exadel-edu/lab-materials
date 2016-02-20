@@ -1,5 +1,6 @@
 package by.bsu.up.chat.utils;
 
+import by.bsu.up.chat.InvalidTokenException;
 import by.bsu.up.chat.logging.Logger;
 import by.bsu.up.chat.logging.impl.Log;
 import org.json.simple.JSONObject;
@@ -15,6 +16,7 @@ public class MessageHelper {
     public static final String MESSAGE_PART_SINGLE_MSG = "message";
     public static final String MESSAGE_PART_TOKEN = "token";
     public static final String TOKEN_TEMPLATE = "TN%dEN";
+    public static final String TOKEN_FORMAT = "TN[0-9]{2,}EN";
 
     private static final JSONParser jsonParser = new JSONParser();
     private static final Logger logger = Log.create(MessageHelper.class);
@@ -37,7 +39,7 @@ public class MessageHelper {
      * @return generated token
      */
     public static String buildToken(int receivedMessagesCount) {
-        Integer stateCode = receivedMessagesCount * 8 + 11;
+        Integer stateCode = encodeIndex(receivedMessagesCount);
         return String.format(TOKEN_TEMPLATE, stateCode);
     }
 
@@ -47,7 +49,25 @@ public class MessageHelper {
      * @return decoded amount messages (index)
      */
     public static int parseToken(String token) {
-        return (Integer.valueOf(token.substring(2, token.length() - 2)) - 11) / 8;
+        if (!token.matches(TOKEN_FORMAT)) {
+            throw new InvalidTokenException("Incorrect format of token");
+        }
+        String encodedIndex = token.substring(2, token.length() - 2);
+        try {
+            int stateCode = Integer.valueOf(encodedIndex);
+            return decodeIndex(stateCode);
+        } catch (NumberFormatException e) {
+            logger.error("Could not parse token", e);
+            throw new InvalidTokenException("Invalid encoded value: " + encodedIndex);
+        }
+    }
+
+    private static int encodeIndex(int receivedMessagesCount) {
+        return receivedMessagesCount * 8 + 11;
+    }
+
+    private static int decodeIndex(int stateCode) {
+        return (stateCode - 11) / 8;
     }
 
     @SuppressWarnings("unchecked")      //allows to suppress warning of unchecked parameter type for generics
