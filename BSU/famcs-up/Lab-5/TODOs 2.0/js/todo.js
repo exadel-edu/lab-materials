@@ -9,7 +9,8 @@ function run(){
 	appContainer.addEventListener('change', delegateEvent);
 	appContainer.addEventListener('dblclick', delegateEvent);
 
-	taskList = loadTasks() || [ newTask('Сделать разметку', true),
+	taskList = loadTasks() || [
+			newTask('Сделать разметку', true),
 			newTask('Выучить JavaScript', true),
 			newTask('Написать чат !')
 		];
@@ -143,13 +144,13 @@ function uniqueId() {
 	var date = Date.now();
 	var random = Math.random() * Math.random();
 
-	return Math.floor(date * random).toString();
+	return Math.floor(date * random);
 }
 
 function newTask(text, done) {
 	return {
 		description:text,
 		done: !!done,
-		id: uniqueId()
+		id: '' + uniqueId()
 	};
 }
