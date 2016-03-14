@@ -1,17 +1,4 @@
-var uniqueId = function() {
-	var date = Date.now();
-	var random = Math.random() * Math.random();
-
-	return Math.floor(date * random).toString();
-};
-
-var theTask = function(text, done) {
-	return {
-		description:text,
-		done: !!done,
-		id: uniqueId()
-	};
-};
+'use strict';
 
 var taskList = [];
 
@@ -22,127 +9,117 @@ function run(){
 	appContainer.addEventListener('change', delegateEvent);
 	appContainer.addEventListener('dblclick', delegateEvent);
 
-	var allTasks = restore() || [ theTask('Сделать разметку', true),
-			theTask('Выучить JavaScript', true),
-			theTask('Написать чат !')
+	taskList = loadTasks() || [ newTask('Сделать разметку', true),
+			newTask('Выучить JavaScript', true),
+			newTask('Написать чат !')
 		];
 
-	createAllTasks(allTasks);
-	output(taskList);
-	updateCounter();
+	render(taskList);
 }
 
-function createAllTasks(allTasks) {
-	for(var i = 0; i < allTasks.length; i++)
-		addTodo(allTasks[i]);
+function render(tasks) {
+	for(var i = 0; i < tasks.length; i++) {
+		renderTask(tasks[i]);
+	}
+
+	renderLocalStorage(taskList);
+	renderCounter(taskList);
 }
 
 function delegateEvent(evtObj) {
 	if(evtObj.type === 'dblclick'
 		&& evtObj.target.classList.contains('item'))
-		onDblClickItem(evtObj.target);
+		onItemDoubleClick(evtObj.target);
 	if(evtObj.type === 'click'
 		&& evtObj.target.classList.contains('todo-button'))
 		onAddButtonClick();
 	if(evtObj.type === 'change' 
 		&& evtObj.target.nodeName == 'INPUT'
 		&& evtObj.target.type == 'checkbox')
-		onToggleItem(evtObj.target.parentElement);
+		onItemCheckboxChange(evtObj.target.parentElement);
 }
 
-function onDblClickItem(divItem) {
-	var id = divItem.attributes['data-task-id'].value;
+function onItemDoubleClick(element) {
+	var index = indexByElement(element, taskList);
 
-	for(var i = 0; i < taskList.length; i++) {
-		if(taskList[i].id != id)
-			continue;
-
-		changeDescription(taskList[i]);
-		updateItem(divItem, taskList[i]);
-		store(taskList);
-
-		return;
-	}
-}
-
-function changeDescription(task){
-	task.description += '!';
+	taskList.splice(index, 1);
+	element.parentElement.removeChild(element);
+	renderCounter(taskList);
+	renderLocalStorage(taskList);
+	saveTasks(taskList);
 }
 
 function onAddButtonClick(){
 	var todoText = document.getElementById('todoText');
-	var newTask = theTask(todoText.value);
+	var task = newTask(todoText.value);
 
 	if(todoText.value == '')
 		return;
 
-	addTodo(newTask);
-	todoText.value = '';
-	updateCounter();
-	store(taskList);
-} 
-
-function onToggleItem(divItem) {
-	var id = divItem.attributes['data-task-id'].value;
-
-	for(var i = 0; i < taskList.length; i++) {
-		if(taskList[i].id != id)
-			continue;
-
-		toggle(taskList[i]);
-		updateItem(divItem, taskList[i]);
-		store(taskList);
-
-		return;
-	}
-}
-
-function toggle(task) {
-	task.done = !task.done;
-}
-
-function updateItem(divItem, task){
-	if(task.done) {
-		divItem.classList.add('strikeout');
-		divItem.firstChild.checked = true;
-	} else {
-		divItem.classList.remove('strikeout');
-		divItem.firstChild.checked = false;
-	}
-
-	divItem.setAttribute('data-task-id', task.id);
-	divItem.lastChild.textContent = task.description;
-}
-
-function addTodo(task) {
-	var item = createItem(task);
-	var items = document.getElementsByClassName('items')[0];
-
 	taskList.push(task);
-	items.appendChild(item);
+	todoText.value = '';
+	render([task]);
+	saveTasks(taskList);
 }
 
-function createItem(task){
-	var temp = document.createElement('li');
-	var htmlAsText = '<li class="item strikeout" data-task-id="идентификатор">'+
-	'<input class="item-check" type="checkbox">описание задачи</li>';
+function onItemCheckboxChange(element) {
+	var index = indexByElement(element, taskList);
+	var task = taskList[index];
 
-	temp.innerHTML = htmlAsText;
-	updateItem(temp.firstChild, task);
-
-	return temp.firstChild;
+	task.done = !task.done;
+	renderTaskState(element, task);
+	renderLocalStorage(taskList);
+	saveTasks(taskList);
 }
 
-function updateCounter(){
+function indexByElement(element, tasks){
+	var id = element.attributes['data-task-id'].value;
+
+	return tasks.findIndex(function(item) {
+		return item.id == id;
+	});
+}
+
+function renderTaskState(element, task){
+	if(task.done) {
+		element.classList.add('strikeout');
+		element.firstChild.checked = true;
+	} else {
+		element.classList.remove('strikeout');
+		element.firstChild.checked = false;
+	}
+
+	element.setAttribute('data-task-id', task.id);
+	element.lastChild.textContent = task.description;
+}
+
+function renderTask(task){
 	var items = document.getElementsByClassName('items')[0];
-	var counter = document.getElementsByClassName('counter-holder')[0];
+	var element = elementFromTemplate();
 
-	counter.innerText = items.children.length.toString();
+	renderTaskState(element, task);
+	items.appendChild(element);
 }
 
-function store(listToSave) {
-	output(listToSave);
+function elementFromTemplate() {
+	var template = document.getElementById("task-template");
 
+	return template.firstElementChild.cloneNode(true);
+}
+
+function renderCounter(tasks){
+	var counter = document.getElementById('counter-holder');
+
+	counter.innerText = tasks.length.toString();
+}
+
+function renderLocalStorage(value){
+	var output = document.getElementById('output');
+
+	output.innerText = "localStorage:\n" + JSON.stringify(value, null, 2) + ";";
+}
+
+function saveTasks(listToSave) {
 	if(typeof(Storage) == "undefined") {
 		alert('localStorage is not accessible');
 		return;
@@ -151,7 +128,7 @@ function store(listToSave) {
 	localStorage.setItem("TODOs taskList", JSON.stringify(listToSave));
 }
 
-function restore() {
+function loadTasks() {
 	if(typeof(Storage) == "undefined") {
 		alert('localStorage is not accessible');
 		return;
@@ -162,8 +139,17 @@ function restore() {
 	return item && JSON.parse(item);
 }
 
-function output(value){
-	var output = document.getElementById('output');
+function uniqueId() {
+	var date = Date.now();
+	var random = Math.random() * Math.random();
 
-	output.innerText = "var taskList = " + JSON.stringify(value, null, 2) + ";";
+	return Math.floor(date * random).toString();
+}
+
+function newTask(text, done) {
+	return {
+		description:text,
+		done: !!done,
+		id: uniqueId()
+	};
 }

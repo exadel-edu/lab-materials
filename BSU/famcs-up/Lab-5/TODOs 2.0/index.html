@@ -42,7 +42,7 @@
                             </div>
                         </div>
 
-                        <div class="todo-result"><span class="todo-result-text">Всего: <span class="counter-holder">0</span> задач </span></div>
+                        <div class="todo-result"><span class="todo-result-text">Всего: <span id="counter-holder">0</span> задач </span></div>
                     </div>
                 </div>
             </section>
@@ -55,5 +55,9 @@
             </div>
         </div>
     </footer>
+    <div style="display:none" id="task-template">
+        <li class="item strikeout" data-task-id="идентификатор">
+        <input class="item-check" type="checkbox">описание задачи</li>
+    </div>
 </body>
 </html> 
