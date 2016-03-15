@@ -84,10 +84,10 @@ function indexByElement(element, tasks){
 function renderTaskState(element, task){
 	if(task.done) {
 		element.classList.add('strikeout');
-		element.firstChild.checked = true;
+		element.firstElementChild.checked = true;
 	} else {
 		element.classList.remove('strikeout');
-		element.firstChild.checked = false;
+		element.firstElementChild.checked = false;
 	}
 
 	element.setAttribute('data-task-id', task.id);
