@@ -1,4 +1,4 @@
-rm -rf bin
+rmdir -rf bin
 
 mkdir bin
 
