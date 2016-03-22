@@ -71,10 +71,10 @@ public class MessageHelper {
     }
 
     @SuppressWarnings("unchecked")      //allows to suppress warning of unchecked parameter type for generics
-    public static String buildServerResponseBody(List<String> messages) {
+    public static String buildServerResponseBody(List<String> messages, int lastPosition) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(MESSAGE_PART_ALL_MSG, messages);
-        jsonObject.put(MESSAGE_PART_TOKEN, buildToken(messages.size()));
+        jsonObject.put(MESSAGE_PART_TOKEN, buildToken(lastPosition));
         return jsonObject.toJSONString();
     }
 
