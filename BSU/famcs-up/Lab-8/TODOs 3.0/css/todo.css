@@ -136,7 +136,6 @@ body {
 }
 
 .todo-output-text {
-	word-break: break-all;
-    word-wrap: break-word;
+    overflow:auto;
 }
 
