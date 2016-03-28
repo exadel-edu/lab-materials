@@ -9,7 +9,7 @@ function Connect() {
 		return;
 
 	interval = setInterval( function() {
-		ajax('GET', 'http://localhost:999/chat?token=TN11EN', function (serverResponse){
+		ajax('GET', 'http://localhost:8080/chat?token=TN11EN', function (serverResponse){
 			interval && setOutput(serverResponse);
 		});
 	}, seconds(1) );
@@ -38,7 +38,7 @@ function Disconnect() {
 		interval = null;
 	}
 
-	var help = 'Start server at localhost:999\nExpected URL is http://localhost:999/chat?token=TN11EN';
+	var help = 'Start server at localhost:8080\nExpected URL is http://localhost:999/chat?token=TN11EN';
 
 	setOutput(help);
 }
