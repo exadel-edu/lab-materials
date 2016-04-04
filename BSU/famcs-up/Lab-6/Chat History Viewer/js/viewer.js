@@ -21,7 +21,7 @@ function Connect() {
 
 	function whileConnected() {
 		isConnected = setTimeout(function () {
-			ajax('GET', 'http://localhost:1555/todos?token=TN11EN', function (serverResponse) {
+			ajax('GET', serverUrl, function (serverResponse) {
 				if (isConnected) {
 					setOutput(serverResponse);
 					whileConnected();
