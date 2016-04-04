@@ -1,18 +1,25 @@
-var interval = null;
+var isConnected = void 0;
 
 function About() {
-	alert('Chat History Viewer\nПоказывает серверную историю сообщений\nExadel @ 2015');
+	alert('Server JSON Viewer\nПоказывает серверный ответ\nExadel @ 2016');
 }
 
 function Connect() {
-	if(interval)
+	if(isConnected)
 		return;
 
-	interval = setInterval( function() {
-		ajax('GET', 'http://localhost:8080/chat?token=TN11EN', function (serverResponse){
-			interval && setOutput(serverResponse);
-		});
-	}, seconds(1) );
+	function whileConnected() {
+		isConnected = setTimeout(function () {
+			ajax('GET', 'http://localhost:1555/todos?token=TN11EN', function (serverResponse) {
+				if (isConnected) {
+					setOutput(serverResponse);
+					whileConnected();
+				}
+			});
+		}, seconds(1));
+	}
+
+	whileConnected();
 }
 
 function tryJSON(text) {
@@ -33,12 +40,12 @@ function setOutput(text){
 }
 
 function Disconnect() {
-	if(interval) {
-		clearInterval(interval);
-		interval = null;
+	if(isConnected) {
+		clearInterval(isConnected);
+		isConnected = null;
 	}
 
-	var help = 'Start server at localhost:8080\nExpected URL is http://localhost:999/chat?token=TN11EN';
+	var help = 'Start server at localhost:1555\nExpected URL is http://localhost:1555/todos?token=TN11EN';
 
 	setOutput(help);
 }
@@ -58,7 +65,7 @@ function ajax(method, url, toReturn) {
 
     xhr.ontimeout = function () {
     	toReturn('Server timed out !');
-    }
+    };
 
     xhr.onerror = function (e) {
     	var errMsg = 'Server connection error !\n'+
