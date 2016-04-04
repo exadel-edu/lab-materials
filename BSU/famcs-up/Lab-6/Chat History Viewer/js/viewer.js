@@ -1,7 +1,18 @@
 var isConnected = void 0;
+var serverUrl = 'http://localhost:1555/todos?token=TN11EN';
 
 function About() {
 	alert('Server JSON Viewer\nПоказывает серверный ответ\nExadel @ 2016');
+}
+
+function Run() {
+	Help();
+}
+
+function Help() {
+	var help = 'Start server at localhost:1555\nExpected URL is ' + serverUrl;
+
+	setOutput(help);
 }
 
 function Connect() {
@@ -45,9 +56,7 @@ function Disconnect() {
 		isConnected = null;
 	}
 
-	var help = 'Start server at localhost:1555\nExpected URL is http://localhost:1555/todos?token=TN11EN';
-
-	setOutput(help);
+	Help();
 }
 
 function ajax(method, url, toReturn) {
