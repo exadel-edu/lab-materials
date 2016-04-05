@@ -125,9 +125,12 @@ function textValue() {
 }
 
 function indexById(list, id){
-	return list.findIndex(function(item) {
-		return item.id == id;
-	});
+  for(var i = 0; i< list.length; i++) {
+    if(list[i].id == id) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 function idFromElement(element){
@@ -279,7 +282,7 @@ function ajax(method, url, data, continueWith, continueWithError) {
 
     xhr.ontimeout = function () {
     	ontinueWithError('Server timed out !');
-    }
+    };
 
     xhr.onerror = function (e) {
     	var errMsg = 'Server connection error !\n'+
@@ -297,4 +300,4 @@ function ajax(method, url, data, continueWith, continueWithError) {
 
 window.onerror = function(err) {
 	output(err.toString());
-}
+};
